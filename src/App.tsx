@@ -36,24 +36,25 @@ function LinkpreviewList({ data }: { data: TData }) {
   return (
     <div>
       <h1>fake data:</h1>
-      <div className="flex flex-col items-center">
-        {data.linkpreviewId
-          .reverse()
-          .map((id) => (
-            <div className="mb-4  bg-gray-100 shadow-xl ring-1 ring-gray-900/5">
-              <Linkpreview
-                key={id}
-                data={data.linkpreviewCollection[id]}
-                id={id}
-              />
-              <div className="m-2 flex">
-                {data.tagsCollection[id].map((tag) => (
-                  <Tag tag={tag} />
-                ))}
+      <div className="flex justify-center">
+        <div className="w-[30rem]">
+          {data.linkpreviewId
+            .map((id) => (
+              <div className="mb-4 bg-gray-100 shadow-xl ring-1 ring-gray-900/5">
+                <Linkpreview
+                  key={id}
+                  data={data.linkpreviewCollection[id]}
+                  id={id}
+                />
+                <div className="m-2 flex flex-wrap">
+                  {data.tagsCollection[id].map((tag) => (
+                    <Tag tag={tag} />
+                  ))}
+                </div>
               </div>
-            </div>
-          ))
-          .reverse()}
+            ))
+            .reverse()}
+        </div>
       </div>
     </div>
   );
