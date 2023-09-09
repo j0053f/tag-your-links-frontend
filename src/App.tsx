@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchFakeData, TLinkpreview, TData } from "./fakeApi";
 import UrlInput from "./components/url-input";
 import Linkpreview from "./components/Linkpreview";
+import Tag from "./components/Tag";
 type Tstatus = "updated" | "sync";
 function App() {
   const [status, setStatus] = useState<Tstatus>("updated");
@@ -31,7 +32,6 @@ function App() {
 }
 
 function LinkpreviewList({ data }: { data: TData }) {
-  console.log(data.linkpreviewId.reverse());
   return (
     <div>
       <h1>fake data:</h1>
@@ -45,11 +45,9 @@ function LinkpreviewList({ data }: { data: TData }) {
                 data={data.linkpreviewCollection[id]}
                 id={id}
               />
-              <div className="mt-2 flex">
+              <div className="m-2 flex">
                 {data.tagsCollection[id].map((tag) => (
-                  <div className="m-2 rounded-md border border-gray-400 px-1">
-                    {tag}
-                  </div>
+                  <Tag tag={tag} />
                 ))}
               </div>
             </div>
