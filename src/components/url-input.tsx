@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { TLinkpreview, getLinkpreview, storeLinkPreview } from "../fakeApi";
 import Linkpreview from "./Linkpreview";
-
+import TagInput from "./TagInput";
 function isURL(str: string) {
   try {
     new URL(str);
@@ -15,12 +15,14 @@ export default function UrlInput({ setStatus }) {
   const [data, setData] = useState<{ data: TLinkpreview; id: string } | null>(
     null,
   );
+  const [tags, setTags] = useState<string[]>([]);
+
   useEffect(() => {
-    getLinkpreview(url).then((d) => setData(d));
+    isURL(url) && getLinkpreview(url).then((d) => setData(d));
   }, [url]);
 
   const handleSave = () => {
-    storeLinkPreview(data.id).then(() => {
+    storeLinkPreview({ id: data.id, tags: tags }).then(() => {
       setStatus("updated");
       setUrl("");
       setData(null);
@@ -37,7 +39,16 @@ export default function UrlInput({ setStatus }) {
           setUrl(event.target.value);
         }}
       />
-      {data && <InputDropdown data={data} handleSave={handleSave} />}
+      {data && (
+        <div className="w-[30rem]">
+          <InputDropdown
+            data={data}
+            handleSave={handleSave}
+            tags={tags}
+            setTags={setTags}
+          />
+        </div>
+      )}
     </div>
   );
 }
@@ -45,18 +56,22 @@ export default function UrlInput({ setStatus }) {
 function InputDropdown({
   data,
   handleSave,
+  tags,
+  setTags,
 }: {
   data: { data: TLinkpreview; id: string };
   handleSave: () => void;
+  tags: string[];
+  setTags: any;
 }) {
   return (
-    <div className="border border-red-600">
+    <div className="flex flex-col rounded-md border-2">
       <Linkpreview {...data} />
-
+      <TagInput tags={tags} setTags={setTags} />
       <div className="flex w-full justify-end">
         <button
-          onClick={handleSave}
           className="m-2 rounded-md border bg-blue-400 p-1 text-white"
+          onClick={handleSave}
         >
           save
         </button>
