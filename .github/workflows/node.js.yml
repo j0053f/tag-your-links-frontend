@@ -5,13 +5,12 @@ name: Deploy to Ubuntu Server
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -20,25 +19,30 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-     #- run: npm test 
-    - name: SSH Remote Commands
-      # You may pin to the exact commit or the version.
-      # uses: appleboy/ssh-action@55dabf81b49d4120609345970c91507e2d734799
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{secrets.VM_IP}}
-        port: 3031
-        username: ${{secrets.VM_USERNAME}}
-        key: ${{secrets.VM_SSH}}
-        script: |
-          cd ~/w/projects/tag-your-links-frontend
-          git pull
-          npm install
-          npx vite build
-          cp -r dist/* /var/www/test-url.ir 
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+        #- run: npm test
+      - name: SSH Remote Commands
+        # You may pin to the exact commit or the version.
+        # uses: appleboy/ssh-action@55dabf81b49d4120609345970c91507e2d734799
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{secrets.VM_IP}}
+          port: 3031
+          username: ${{secrets.VM_USERNAME}}
+          key: ${{secrets.VM_SSH}}
+          script: |
+            cd ~/w/projects/tag-your-links-frontend
+            echo "Changed directory"
+            git pull
+            echo "Git pull completed"
+            npm install
+            echo "npm install completed"
+            npx vite build
+            echo "Vite build completed"
+            cp -r dist/* /var/www/test-url.ir
+            echo "Files copied"
