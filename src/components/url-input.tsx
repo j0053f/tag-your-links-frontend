@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { TLinkpreview, getLinkpreview, storeLinkPreview } from "../fakeApi";
 import Linkpreview from "./Linkpreview";
 import TagInput from "./TagInput";
+import { Tstatus } from "../App";
 function isURL(str: string) {
   try {
     new URL(str);
@@ -10,7 +11,11 @@ function isURL(str: string) {
     return false;
   }
 }
-export default function UrlInput({ setStatus }) {
+export default function UrlInput({
+  setStatus,
+}: {
+  setStatus: Dispatch<SetStateAction<Tstatus>>;
+}) {
   const [url, setUrl] = useState("");
   const [data, setData] = useState<{ data: TLinkpreview; id: string } | null>(
     null,
@@ -22,11 +27,13 @@ export default function UrlInput({ setStatus }) {
   }, [url]);
 
   const handleSave = () => {
-    storeLinkPreview({ id: data.id, tags: tags }).then(() => {
-      setStatus("updated");
-      setUrl("");
-      setData(null);
-    });
+    if (data) {
+      storeLinkPreview({ id: data.id, tags: tags }).then(() => {
+        setStatus("updated");
+        setUrl("");
+        setData(null);
+      });
+    }
   };
   return (
     <div className="flex flex-col items-center justify-center">

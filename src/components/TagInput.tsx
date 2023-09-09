@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Tag from "./Tag";
 export default function TagInput({
   tags,
   setTags,
 }: {
   tags: string[];
-  setTags: any;
+  setTags: Dispatch<SetStateAction<string[]>>;
 }) {
   const [inputValue, setInputValue] = useState("");
   const [isInputFocused, setInputFocused] = useState(false);

@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { fetchFakeData, TLinkpreview, TData } from "./fakeApi";
+import { fetchFakeData, TData } from "./fakeApi";
 import UrlInput from "./components/url-input";
 import Linkpreview from "./components/Linkpreview";
 import Tag from "./components/Tag";
-type Tstatus = "updated" | "sync";
+export type Tstatus = "updated" | "sync";
 function App() {
   const [status, setStatus] = useState<Tstatus>("updated");
   const [data, setData] = useState<TData>({
     linkpreviewCollection: {},
     linkpreviewId: [],
     tagsCollection: {},
+    tagsId: [],
   });
   useEffect(() => {
     if (status === "updated") {

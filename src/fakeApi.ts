@@ -145,7 +145,7 @@ export const fetchFakeData = (): Promise<TData> => {
     }, 1000);
   });
 };
-const tmp: TData = {
+const tmp: Omit<TData, "tagsId"> = {
   linkpreviewCollection: {},
   linkpreviewId: [],
   tagsCollection: {},
