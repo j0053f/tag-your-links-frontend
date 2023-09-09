@@ -26,16 +26,15 @@ export default function TagInput({
           <Tag tag={tag} />
         ))}
         <input
-          placeholder="Add Tags for easily accessing them later!"
+          placeholder="Add Tags ..."
           className=" w-20 flex-grow p-2  outline-none"
           onChange={(event) => {
-            setInputValue(event.target.value);
-          }}
-          onKeyDown={(event) => {
-            if (event.key === " ") {
-              setInputValue("");
+            const inputText = event.currentTarget.value;
+            if (inputText[inputText.length - 1] === " ") {
               setTags((tags) => [...tags, inputValue]);
-              console.log(inputValue);
+              setInputValue("");
+            } else {
+              setInputValue(event.target.value);
             }
           }}
           onBlur={() => {
