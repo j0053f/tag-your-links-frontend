@@ -12,6 +12,7 @@ export interface TLinkpreview {
 export interface TData {
   linkpreviewCollection: { [key: string]: TLinkpreview };
   linkpreviewId: string[];
+  tagsId: string[];
   tagsCollection: { [key: string]: string[] };
 }
 const fakeData: TData = {
@@ -24,6 +25,7 @@ const fakeData: TData = {
     "1693334734823-394",
     "1693334735102-6545",
   ],
+  tagsId: ["fun", "frontend"],
   tagsCollection: {
     "1693334686029-3598": ["fun"],
     "1693334729567-458": ["frontend"],
@@ -161,12 +163,21 @@ export const getLinkpreview = async (
   return r;
 };
 
-export const storeLinkPreview = (id: string): Promise<void> => {
+export const storeLinkPreview = ({
+  id,
+  tags,
+}: {
+  id: string;
+  tags: string[];
+}): Promise<void> => {
   return new Promise((resolve, reject) => {
     if (id in tmp.linkpreviewCollection) {
       fakeData.linkpreviewId.push(id);
       fakeData.linkpreviewCollection[id] = tmp.linkpreviewCollection[id];
-      fakeData.tagsCollection[id] = [];
+      fakeData.tagsCollection[id] = tags;
+      tags.forEach((item) => {
+        if (!fakeData.tagsId.includes(item)) fakeData.tagsId.push(item);
+      });
       resolve();
     }
     reject(new Error("server internal Error,"));
