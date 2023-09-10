@@ -9,7 +9,7 @@ export default function Linkpreview({
   const { image, title } = data;
   console.log(id);
   return (
-    <div className="w-[30rem] rounded ">
+    <div className=" rounded ">
       <img src={`https://test-url.ir/api/${image}`} className="rounded-t-lg" />
 
       <div
