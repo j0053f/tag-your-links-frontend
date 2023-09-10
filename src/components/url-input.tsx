@@ -32,29 +32,30 @@ export default function UrlInput({
         setStatus("updated");
         setUrl("");
         setData(null);
+        setTags([]);
       });
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center">
-      <input
-        className="my-2 w-11/12  rounded-lg border-2 px-4 py-3 md:w-[50vw]"
-        type="text"
-        value={url}
-        placeholder="HTTPS://"
-        onChange={(event) => {
-          setUrl(event.target.value);
-        }}
-      />
+    <div>
+      <div className="flex justify-center">
+        <input
+          className="my-2 w-11/12 rounded-lg border-2 px-4 py-3 sm:w-[80vm] md:w-[70vw] lg:w-[30vm]"
+          type="url"
+          value={url}
+          placeholder="HTTPS://"
+          onChange={(event) => {
+            setUrl(event.target.value);
+          }}
+        />
+      </div>
       {data && (
-        <div className="w-[30rem]">
-          <InputDropdown
-            data={data}
-            handleSave={handleSave}
-            tags={tags}
-            setTags={setTags}
-          />
-        </div>
+        <InputDropdown
+          data={data}
+          handleSave={handleSave}
+          tags={tags}
+          setTags={setTags}
+        />
       )}
     </div>
   );
@@ -72,7 +73,7 @@ function InputDropdown({
   setTags: any;
 }) {
   return (
-    <div className="flex flex-col rounded-md border-2">
+    <div className="mx-auto w-[30rem] rounded-xl border border-gray-700 outline outline-gray-700">
       <Linkpreview {...data} />
       <TagInput tags={tags} setTags={setTags} />
       <div className="flex w-full justify-end">
