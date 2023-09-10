@@ -73,7 +73,7 @@ function InputDropdown({
   setTags: any;
 }) {
   return (
-    <div className="mx-auto w-[30rem] rounded-xl border border-gray-700 outline outline-gray-700">
+    <div className="mx-auto max-w-[30rem] rounded-xl border border-gray-700 outline outline-gray-700">
       <Linkpreview {...data} />
       <TagInput tags={tags} setTags={setTags} />
       <div className="flex w-full justify-end">
