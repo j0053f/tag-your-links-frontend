@@ -2,6 +2,7 @@ import Linkpreview from "./Linkpreview";
 import Tag from "./Tag";
 import { fetchFakeData } from "../fakeApi";
 import { useQuery } from "@tanstack/react-query";
+import { AiOutlineLoading } from "react-icons/ai";
 
 export default function LinkpreviewList() {
   const { isLoading, isError, data } = useQuery({
@@ -9,7 +10,14 @@ export default function LinkpreviewList() {
     queryFn: fetchFakeData,
   });
 
-  if (isLoading) return "Loading...";
+  if (isLoading)
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="animate-spin">
+          <AiOutlineLoading size="3rem" />
+        </div>
+      </div>
+    );
   if (isError) return "An error has occurred: ";
 
   console.log("LinkpreviewList");
