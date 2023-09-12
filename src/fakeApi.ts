@@ -141,7 +141,13 @@ function generateUniqueId() {
 export const fetchFakeData = (): Promise<TData> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(fakeData);
+      console.log(fakeData.linkpreviewId);
+      resolve({
+        linkpreviewCollection: { ...fakeData.linkpreviewCollection },
+        linkpreviewId: [...fakeData.linkpreviewId],
+        tagsId: [...fakeData.tagsId],
+        tagsCollection: { ...fakeData.tagsCollection },
+      });
     }, 1000);
   });
 };
@@ -178,6 +184,7 @@ export const storeLinkPreview = ({
       tags.forEach((item) => {
         if (!fakeData.tagsId.includes(item)) fakeData.tagsId.push(item);
       });
+
       resolve();
     }
     reject(new Error("server internal Error,"));

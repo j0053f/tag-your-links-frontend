@@ -1,8 +1,9 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useState } from "react";
 import { TLinkpreview, getLinkpreview, storeLinkPreview } from "../fakeApi";
 import Linkpreview from "./Linkpreview";
 import TagInput from "./TagInput";
-import { Tstatus } from "../App";
+
+import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
 function isURL(str: string) {
   try {
     new URL(str);
@@ -11,31 +12,29 @@ function isURL(str: string) {
     return false;
   }
 }
-export default function UrlInput({
-  setStatus,
-}: {
-  setStatus: Dispatch<SetStateAction<Tstatus>>;
-}) {
+export default function UrlInput() {
   const [url, setUrl] = useState("");
-  const [data, setData] = useState<{ data: TLinkpreview; id: string } | null>(
-    null,
-  );
   const [tags, setTags] = useState<string[]>([]);
 
-  useEffect(() => {
-    isURL(url) && getLinkpreview(url).then((d) => setData(d));
-  }, [url]);
+  const queryClient = useQueryClient();
 
-  const handleSave = () => {
-    if (data) {
-      storeLinkPreview({ id: data.id, tags: tags }).then(() => {
-        setStatus("updated");
-        setUrl("");
-        setData(null);
-        setTags([]);
-      });
-    }
-  };
+  const { isLoading, isError, data } = useQuery({
+    queryKey: ["linkpreview", url],
+    queryFn: () => getLinkpreview(url),
+    enabled: isURL(url),
+  });
+
+  const mutation = useMutation({
+    mutationFn: storeLinkPreview,
+    onSuccess: (data) => {
+      console.log("onSuccess");
+      console.log(data);
+      queryClient.invalidateQueries(["linkpreview-list"]);
+      setUrl("");
+      setTags([]);
+    },
+  });
+
   return (
     <div>
       <div className="flex justify-center">
@@ -49,10 +48,16 @@ export default function UrlInput({
           }}
         />
       </div>
+
+      {isLoading && "Loading..."}
+      {isError && "An error has occurred: "}
       {data && (
         <InputDropdown
           data={data}
-          handleSave={handleSave}
+          handleSave={() => {
+            console.log({ id: data.id, tags: tags });
+            mutation.mutate({ id: data.id, tags: tags });
+          }}
           tags={tags}
           setTags={setTags}
         />
