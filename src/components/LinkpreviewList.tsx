@@ -1,6 +1,6 @@
 import Linkpreview from "./Linkpreview";
 import Tag from "./Tag";
-import { TData, fetchFakeData } from "../fakeApi";
+import { fetchFakeData } from "../fakeApi";
 import { useQuery } from "@tanstack/react-query";
 
 export default function LinkpreviewList() {
