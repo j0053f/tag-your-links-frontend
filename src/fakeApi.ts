@@ -27,7 +27,7 @@ export interface TUserData {
 
 export const getData = async (): Promise<TData> => {
   const credentials = "Basic " + btoa("admin:password");
-  const res = await fetch("http://localhost:4000/api/linkpreview/admin", {
+  const res = await fetch("https://test-url.ir/api/linkpreview/admin", {
     headers: { Authorization: credentials },
   });
   const data = await res.json();
@@ -37,7 +37,7 @@ export const getData = async (): Promise<TData> => {
 export const getLinkpreview = async (
   url: string,
 ): Promise<{ data: TLinkpreview; id: string }> => {
-  const res = await fetch(`http://localhost:4000/api/linkpreview?url=${url}`);
+  const res = await fetch(`https://test-url.ir/api/linkpreview?url=${url}`);
   const data = await res.json();
   return data;
 };
@@ -50,7 +50,7 @@ export const storeLinkPreview = async ({
   tags: string[];
 }): Promise<string> => {
   const credentials = "Basic " + btoa("admin:password");
-  const res = await fetch("http://localhost:4000/api/linkpreview", {
+  const res = await fetch("https://test-url.ir/api/linkpreview", {
     method: "POST",
     headers: { Authorization: credentials, "Content-Type": "application/json" },
     body: JSON.stringify({ id, tags }),

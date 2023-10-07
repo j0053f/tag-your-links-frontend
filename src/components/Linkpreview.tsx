@@ -11,7 +11,7 @@ export default function Linkpreview({
   return (
     <div className=" rounded ">
       <img
-        src={`http://localhost:4000/api/images/${image}`}
+        src={`https://test-url.ir/api/images/${image}`}
         className="rounded-t-lg"
       />
 
