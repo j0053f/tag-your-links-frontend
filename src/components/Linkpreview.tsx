@@ -7,10 +7,13 @@ export default function Linkpreview({
   data: TLinkpreview;
 }) {
   const { image, title } = data;
-  console.log(id);
+  console.log(data);
   return (
     <div className=" rounded ">
-      <img src={`https://test-url.ir/api/${image}`} className="rounded-t-lg" />
+      <img
+        src={`http://localhost:4000/api/images/${image}`}
+        className="rounded-t-lg"
+      />
 
       <div
         className={`px-2 pt-3 text-lg font-bold  ${

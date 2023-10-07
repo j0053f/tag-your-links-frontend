@@ -1,13 +1,13 @@
 import Linkpreview from "./Linkpreview";
 import Tag from "./Tag";
-import { fetchFakeData } from "../fakeApi";
+import { getData } from "../fakeApi";
 import { useQuery } from "@tanstack/react-query";
 import { AiOutlineLoading } from "react-icons/ai";
 
 export default function LinkpreviewList() {
   const { isLoading, isError, data } = useQuery({
     queryKey: ["linkpreview-list"],
-    queryFn: fetchFakeData,
+    queryFn: getData,
   });
 
   if (isLoading)
@@ -34,9 +34,9 @@ export default function LinkpreviewList() {
               key={id}
               className="mb-4 bg-gray-100 shadow-xl ring-1 ring-gray-900/5"
             >
-              <Linkpreview data={data.linkpreviewCollection[id]} id={id} />
+              <Linkpreview data={data.linkpreview[id]} id={id} />
               <div className="m-2 flex flex-wrap">
-                {data.tagsCollection[id].map((tag) => (
+                {data.tag[id].map((tag) => (
                   <Tag tag={tag} key={tag} />
                 ))}
               </div>

@@ -39,21 +39,16 @@ export default function UrlInput() {
       }>(["linkpreview", url]);
       queryClient.setQueryData<TData>(["linkpreview-list"], (oldData) => {
         if (oldData && newLinkpreview) {
-          const {
-            linkpreviewCollection,
-            linkpreviewId,
-            tagsCollection,
-            tagsId,
-          } = oldData;
+          const { linkpreview, linkpreviewId, tag, tagId } = oldData;
 
           const { id, tags } = variables;
           const { data } = newLinkpreview;
           console.log(oldData);
           return {
-            linkpreviewCollection: { ...linkpreviewCollection, [id]: data },
+            linkpreview: { ...linkpreview, [id]: data },
             linkpreviewId: [...linkpreviewId, id],
-            tagsCollection: { ...tagsCollection, [id]: tags },
-            tagsId: [...tagsId],
+            tag: { ...tag, [id]: tags },
+            tagId: [...tagId],
           };
         }
       });
