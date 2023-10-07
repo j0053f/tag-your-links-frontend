@@ -15,13 +15,15 @@ export default function Linkpreview({
         className="rounded-t-lg"
       />
 
-      <div
-        className={`px-2 pt-3 text-lg font-bold  ${
-          title.charCodeAt(0) > 1000 ? "text-right" : "text-left"
-        }`}
-      >
-        {title}
-      </div>
+      {title && (
+        <div
+          className={`px-2 pt-3 text-lg font-bold  ${
+            title.charCodeAt(0) > 1000 ? "text-right" : "text-left"
+          }`}
+        >
+          {title}
+        </div>
+      )}
     </div>
   );
 }
