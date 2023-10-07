@@ -7,7 +7,7 @@ export default function Linkpreview({
   data: TLinkpreview;
 }) {
   const { image, title } = data;
-  console.log(data);
+  console.log(id);
   return (
     <div className=" rounded ">
       <img
